@@ -1,0 +1,99 @@
+<DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA_Compatible" content="ie-edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Jquery Demo</title>
+    </head>
+    <body>
+        
+        <div class="container" id="app">
+            <div class="row">
+                <div class="column">
+                    <h1 id="1st">{{framework}}</h1>
+                    <h1 id="2nd">Vue says hello {{name}}</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column" id="alert column">
+                        <input type="text" class="formcontrol" placeholder="What is your name?" v-model="name" />
+
+                        <div class="alert alert-primary" role="alert">
+                            A simple primary alert—check it out!
+                        </div>
+                    <button type="button" class="btn btn-primary" @click="click" >Primary</button>
+                    <button type="button" class="btn btn-success" id="new">Success</button>
+                </div>
+
+                <div class="column">
+                    <div class="card" style="width: 18rem">
+                        <img src="">
+                        <div class="card-body">
+                            <h5 class="card-title">Cart Total: {{total}}</h5>
+                            <p class="card-text" v-for="x in items">
+                                <input style="width: 50%; float: left" v-model="x.name" placeholder="Item Name" />
+                                <input  style="width: 50%; " v-model="x.price" placeholder="0"/>
+                            </p>
+                            <a href="#" class="btn btn-primary" @click.prevent="addItem" >Add Item</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="row">
+                <div class="column"></div>
+                <div class="column"></div>
+                <div class="column"></div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            $(function(){
+
+                $("#new").on('click', function(){
+
+                    console.log({
+                        theAlert: $(".alert"),
+                        theColumn: $(".alert-column")
+                    });
+                    $(".alert").eq(0)
+                    .clone().text("Some new text")
+                    .appendTo(".alert-column");
+                })
+
+            })
+        </script>
+
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                     framework: 'Vue Demo',
+                     name: null,
+                     items: []
+                },
+                methods: {
+                    click(){
+                        this.framework = 'Used to be jQuery, but now it\'s Vue Demo'
+                    },
+                    addItem(){
+                        this.items.push({ name: '', price: 0.0 });
+                    }
+                },
+                computed: {
+                    total(){
+                        return this.items.reduce( (prev, x) => prev + +x.price, 0 );
+                    }
+                }
+             })
+        </script>
+    </body>
+</html>
